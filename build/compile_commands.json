@@ -1,7 +1,8 @@
 [
 {
-  "directory": "C:/Users/cntkm/projects/C++/signorello/build",
-  "command": "C:\\MinGW64\\bin\\g++.exe -IC:/Users/cntkm/projects/C++/signorello/include -g -o CMakeFiles\\Main.dir\\src\\main.cpp.obj -c C:\\Users\\cntkm\\projects\\C++\\signorello\\src\\main.cpp",
-  "file": "C:\\Users\\cntkm\\projects\\C++\\signorello\\src\\main.cpp"
+  "directory": "/home/leo/projects/cpp/signorello/build",
+  "command": "/usr/bin/clang++  -I/home/leo/projects/cpp/signorello/include -g -o CMakeFiles/Main.dir/src/main.cpp.o -c /home/leo/projects/cpp/signorello/src/main.cpp",
+  "file": "/home/leo/projects/cpp/signorello/src/main.cpp",
+  "output": "CMakeFiles/Main.dir/src/main.cpp.o"
 }
 ]

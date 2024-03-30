@@ -6,7 +6,7 @@
 			[
 				{
 					"build" : ".",
-					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.23"
@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "Main::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Main-Debug-8ab6be08bf55828c6c29.json",
+					"jsonFile" : "target-Main-Debug-bb288fb79d53e91ad714.json",
 					"name" : "Main",
 					"projectIndex" : 0
 				}
@@ -49,12 +49,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/cntkm/projects/C++/signorello/build",
-		"source" : "C:/Users/cntkm/projects/C++/signorello"
+		"build" : "/home/leo/projects/cpp/signorello/build",
+		"source" : "/home/leo/projects/cpp/signorello"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 4
+		"minor" : 6
 	}
 }

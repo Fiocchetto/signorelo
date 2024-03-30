@@ -3,14 +3,16 @@
         {
             "type": "cppbuild",
             "label": "C/C++: g++.exe build active file",
-            "command": "C:\\MinGW64\\bin\\g++.exe",
+            "command": "clang++",
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
                 "${file}",
                 "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe",
-                "-I${workspaceFolder}\\include\\"
+                "${fileDirname}/${fileBasenameNoExtension}",
+                "-I${workspaceFolder}/include/",
+                "-lgmp",
+                "-lmpfr"
             ],
             "options": {
                 "cwd": "${fileDirname}"

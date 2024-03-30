@@ -6,7 +6,7 @@
 #include <vector>
 
 // https://stackoverflow.com/a/1505791
-int myPow(long x, unsigned long long p)
+unsigned long long myPow(long x, unsigned long long p)
 {
   if (p == 0) return 1;
   if (p == 1) return x;
@@ -16,8 +16,9 @@ int myPow(long x, unsigned long long p)
   else return x * tmp * tmp;
 }
 
-std::vector<int> sieve(int n) {
-    std::vector<int> o;
+// TODO convert into mpz_t
+std::vector<unsigned long long> sieve(unsigned long long n) {
+    std::vector<unsigned long long> o;
     if (n > 1) {
         std::vector<bool> A;
         A.push_back(false);
@@ -32,6 +33,7 @@ std::vector<int> sieve(int n) {
             if (A[i]) {
                 for (int j = myPow(i, 2); j <= n; j += i) {
                     A[j] = false;
+                    //std::cout << j << "is not prime" << std::endl;
                 }
             }
         }
