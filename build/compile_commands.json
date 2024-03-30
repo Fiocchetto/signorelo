@@ -1,0 +1,7 @@
+[
+{
+  "directory": "C:/Users/cntkm/projects/C++/signorello/build",
+  "command": "C:\\MinGW64\\bin\\g++.exe -IC:/Users/cntkm/projects/C++/signorello/include -g -o CMakeFiles\\Main.dir\\src\\main.cpp.obj -c C:\\Users\\cntkm\\projects\\C++\\signorello\\src\\main.cpp",
+  "file": "C:\\Users\\cntkm\\projects\\C++\\signorello\\src\\main.cpp"
+}
+]

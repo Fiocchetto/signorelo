@@ -1,0 +1,3 @@
+C:/Users/cntkm/projects/C++/signorello/build/CMakeFiles/Main.dir
+C:/Users/cntkm/projects/C++/signorello/build/CMakeFiles/edit_cache.dir
+C:/Users/cntkm/projects/C++/signorello/build/CMakeFiles/rebuild_cache.dir
