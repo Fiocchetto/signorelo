@@ -212,7 +212,7 @@ string RSADecryption(vector<mpz_class> c, array<mpz_t, 2> key) {
 
 int main(int argc, char const *argv[]) {
   Keys key = RSAGeneration();
-  cout << "Input:" << endl;
+  cout << "Input:";
   string i;
   getline(cin, i);
   vector<mpz_class> cripted;
