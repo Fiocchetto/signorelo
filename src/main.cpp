@@ -1,283 +1,231 @@
+#include "array"
+#include "random"
+#include "sieve.hpp"
 #include <bits/types/FILE.h>
 #include <cmath>
 #include <cstddef>
-#include <iostream>
-#include <stdio.h>
-#include <gmp.h>
-#include <mpfr.h>
-#include <gmpxx.h>
-#include "sieve.hpp"
-#include "array"
-#include "random"
-#include <fstream>
 #include <filesystem>
+#include <fstream>
+#include <gmp.h>
+#include <gmpxx.h>
+#include <iostream>
+#include <mpfr.h>
+#include <stdio.h>
 #include <string>
 #include <vector>
 
 using namespace std;
 
 struct Keys {
-	array<mpz_t, 2> publicKey;
-	array<mpz_t, 2> privateKey;
+  array<mpz_t, 2> publicKey;
+  array<mpz_t, 2> privateKey;
 };
 
-bool is_in_empty(std::ifstream& pFile)
-{
-    return pFile.peek() == std::ifstream::traits_type::eof();
+bool is_in_empty(std::ifstream &pFile) {
+  return pFile.peek() == std::ifstream::traits_type::eof();
 }
 
-int GetLine(std::ifstream& file, int n) {
-	int i = 0;
-	string sLine;
-	while (i != n && getline(file, sLine)) {
-		++i;
-	}
+int GetLine(std::ifstream &file, int n) {
+  int i = 0;
+  string sLine;
+  while (i != n && getline(file, sLine)) {
+    ++i;
+  }
 
-	if (i == n) {
-		return stoi(sLine);
-	}
-	else {
-		return -1;	
-	}
-}
-
-// TODO use more optimized algorithm?
-long long mod_pow(long long b, long long e, long long m) {
-	if (m == 1) {
-		return 0;
-	}
-	long long c = 1;
-	for (int e_prime = 0; e_prime < e; e_prime++) {
-		c = (c * b) % m;
-	}
-	return c;
+  if (i == n) {
+    return stoi(sLine);
+  } else {
+    return -1;
+  }
 }
 
 long long extendedEuclidean(long long a, long long n) {
-	long long t = 0;
-	long long newt = 1;
-	long long r = n;
-	long long newr = a;
+  long long t = 0;
+  long long newt = 1;
+  long long r = n;
+  long long newr = a;
 
-	while (newr != 0) {
-		long long quotiens = div(r, newr).quot;
-		long long prov = newt;
-		newt = t - quotiens * newt;
-		t = prov;
-		prov = newr;
-		newr = r - quotiens * newr;
-		r = prov;
-	}
+  while (newr != 0) {
+    long long quotiens = div(r, newr).quot;
+    long long prov = newt;
+    newt = t - quotiens * newt;
+    t = prov;
+    prov = newr;
+    newr = r - quotiens * newr;
+    r = prov;
+  }
 
-	if (r > 1) {
-		cout << "How did we get here?" << endl;
-		vector<int> hehe;
-		hehe[1] = 3;
-	}
-	if (t < 0) {
-		t += n;
-	}
+  if (r > 1) {
+    cout << "How did we get here?" << endl;
+    vector<int> hehe;
+    hehe[1] = 3;
+  }
+  if (t < 0) {
+    t += n;
+  }
 
-	return t;
+  return t;
 }
 
-Keys RSAGeneration(){
-	std::random_device r;
-	std::random_device s;
+Keys RSAGeneration() {
+  std::random_device r;
+  std::random_device s;
 
-    std::default_random_engine e1(r());
-    std::uniform_int_distribution<int> uniform_dist(0,  50847534);
-	int a = uniform_dist(e1);
-	std::default_random_engine e2(s());
-    int b = uniform_dist(e2);
+  std::default_random_engine e1(r());
+  std::uniform_int_distribution<int> uniform_dist(0, 50847534);
+  int a = uniform_dist(e1);
+  std::default_random_engine e2(s());
+  int b = uniform_dist(e2);
 
-	ifstream primesIn {"list.txt"};
-	if (is_in_empty(primesIn)) {
-		primesIn.close();
-		ofstream primesOut {"list.txt"};
-		cout << "Sieving out prime numbers, will take a while, please wait" << endl;
-		vector<unsigned long long> v = sieve(1000000000);
-		for (unsigned long long i = 0; i < v.size(); i++) {
-			//primesOut << "why\n";
-			primesOut << v[i] << "\n";
-		}
-		primesOut.close();
-		primesIn.open("list.txt");
-		cout << "Sieving complete" << endl;
-	}
-	vector<unsigned long long> v;
-	string sLine;
-	int i = 0;
-	while (i != 50847534 && getline(primesIn, sLine)) {
-		v.push_back(stoull(sLine));
-		++i;
-	}
-	mpz_t p;
-	mpz_t q;
-	mpz_init_set_ui(p, v[a]);
-	primesIn.close();
-	mpz_init_set_ui(q, v[b]);
-	mpz_class p2(p);
-	mpz_class q2(q);
+  ifstream primesIn{"list.txt"};
+  if (is_in_empty(primesIn)) {
+    primesIn.close();
+    ofstream primesOut{"list.txt"};
+    cout << "Sieving out prime numbers, will take a while, please wait" << endl;
+    vector<unsigned long long> v = sieve(1000000000);
+    for (unsigned long long i = 0; i < v.size(); i++) {
+      primesOut << v[i] << "\n";
+    }
+    primesOut.close();
+    primesIn.open("list.txt");
+    cout << "Sieving complete" << endl;
+  }
+  vector<unsigned long long> v;
+  string sLine;
+  int i = 0;
+  while (i != 50847534 && getline(primesIn, sLine)) {
+    v.push_back(stoull(sLine));
+    ++i;
+  }
+  mpz_t p;
+  mpz_t q;
+  mpz_init_set_ui(p, v[a]);
+  primesIn.close();
+  mpz_init_set_ui(q, v[b]);
+  mpz_class p2(p);
+  mpz_class q2(q);
 
-	mpz_class n;
-	n = p2 * q2;
+  mpz_class n;
+  n = p2 * q2;
 
-	mpz_class pMinus1 = p2 - 1;
-	mpz_class qMinus1 = q2 - 1;
+  mpz_class pMinus1 = p2 - 1;
+  mpz_class qMinus1 = q2 - 1;
 
-	mpz_class lambda = lcm(pMinus1, qMinus1);
+  mpz_class lambda = lcm(pMinus1, qMinus1);
 
-	mpz_class e(65537);
+  mpz_class e(65537);
 
-	mpz_class d;
-	mpz_class crimeAgainstHumanity(-1);
-	mpz_powm(d.get_mpz_t(), e.get_mpz_t(), crimeAgainstHumanity.get_mpz_t(), lambda.get_mpz_t());
+  mpz_class d;
+  mpz_class crimeAgainstHumanity(-1);
+  mpz_powm(d.get_mpz_t(), e.get_mpz_t(), crimeAgainstHumanity.get_mpz_t(),
+           lambda.get_mpz_t());
 
-	/*
-	cout << "p: " << p << endl;
-	cout << "q: " << q << endl;
-	cout << "n: " << n << endl;
-	cout << "lambda: " << lambda << endl;
-	cout << "e: " << e << endl;
-	cout << "d: " << d << endl;
-	*/
+  Keys o;
+  mpz_init_set(o.publicKey[0], n.get_mpz_t());
+  mpz_init_set(o.publicKey[1], e.get_mpz_t());
+  mpz_init_set(o.privateKey[0], n.get_mpz_t());
+  mpz_init_set(o.privateKey[1], d.get_mpz_t());
 
-	/*
-	cout << "n: ";
-	mpz_out_str(NULL, 10, n);
-	cout << endl;
-	*/
-
-	Keys o;
-	mpz_init_set(o.publicKey[0], n.get_mpz_t());
-	mpz_init_set(o.publicKey[1], e.get_mpz_t());
-	mpz_init_set(o.privateKey[0], n.get_mpz_t());
-	mpz_init_set(o.privateKey[1], d.get_mpz_t());
-
-	/*
-	mpz_clear(p);
-	mpz_clear(q);
-	mpz_clear(n);
-	mpz_clear(pMinus1);
-	mpz_clear(qMinus1);
-	mpz_clear(lambda);
-	mpz_clear(e);
-	mpz_clear(d);
-	mpz_clear(crimeAgainstHumanity);
-	*/
-
-	return o;
+  return o;
 }
 
-void RSAEncryptionUtility(unsigned int in, array<mpz_t, 2> key, vector<mpz_class> &ihe) {
-	mpz_class N(in);
-	mpz_powm(N.get_mpz_t(), N.get_mpz_t(), key[1], key[0]);
-	ihe.push_back(N);
+void RSAEncryptionUtility(unsigned int in, array<mpz_t, 2> key,
+                          vector<mpz_class> &ihe) {
+  mpz_class N(in);
+  mpz_powm(N.get_mpz_t(), N.get_mpz_t(), key[1], key[0]);
+  ihe.push_back(N);
 }
 
-void RSAEncryption(string in, array<mpz_t, 2> key, vector<mpz_class> &iHateEveryone) {
-	static mpz_class M;
-	for (int i = in.length() - 1; i >= 0; i--) {
-		mpz_class e(256);
-		mpz_pow_ui(e.get_mpz_t(), e.get_mpz_t(), in.length()-i-1);
-		e *= (int)in[i];
-		M += e;
-	}
+void RSAEncryption(string in, array<mpz_t, 2> key,
+                   vector<mpz_class> &iHateEveryone) {
+  static mpz_class M;
+  for (int i = in.length() - 1; i >= 0; i--) {
+    mpz_class e(256);
+    mpz_pow_ui(e.get_mpz_t(), e.get_mpz_t(), in.length() - i - 1);
+    e *= (int)in[i];
+    M += e;
+  }
 
-	// to get the order of magnitude in base 256
-	mpfr_t u;
-	mpfr_init(u);
-	mpfr_set_z(u, M.get_mpz_t(), MPFR_RNDN);
+  // to get the order of magnitude in base 4294967295
+  mpfr_t u;
+  mpfr_init(u);
+  mpfr_set_z(u, M.get_mpz_t(), MPFR_RNDN);
 
-	// log of u with base 16
-	mpfr_log2(u, u, MPFR_RNDN);
-	double omOld = mpfr_get_d(u, MPFR_RNDN);
-	omOld /= 32;
+  // log of u with base 4294967295
+  mpfr_log2(u, u, MPFR_RNDN);
+  double omOld = mpfr_get_d(u, MPFR_RNDN);
+  omOld /= 32;
 
-	int om = floor(omOld);
+  int om = floor(omOld);
 
-	vector<unsigned int> v;
+  vector<unsigned int> v;
 
-	for (int i = 0; i <= om; i++) {
-		//mpz_init(v[i]);
-		mpz_class t(M); 
-		mpz_class comp(4294967295);
-		comp = comp << (32 * om  - 32 * i);
-		//mpz_mul_2exp(comp.get_mpz_t(), comp.get_mpz_t(), (32 * om  - 32 * i));
-		t = t & comp;
-		//mpz_and(t.get_mpz_t(), t.get_mpz_t(), comp.get_mpz_t());
-		t = t >> (32 * om  - 32 * i);
-		//mpz_fdiv_q_2exp(t.get_mpz_t(), t.get_mpz_t(), (32 * om  - 32 * i));
-		v.push_back(t.get_ui());
-	}
+  for (int i = 0; i <= om; i++) {
+    mpz_class t(M);
+    mpz_class comp(4294967295);
+    comp = comp << (32 * om - 32 * i);
+    t = t & comp;
+    t = t >> (32 * om - 32 * i);
+    v.push_back(t.get_ui());
+  }
 
-	//vector<mpz_ptr> v2;
+  for (int i = 0; i < v.size(); i++) {
+    RSAEncryptionUtility(v[i], key, iHateEveryone);
+  }
 
-	for (int i = 0; i < v.size(); i++) {
-		RSAEncryptionUtility(v[i], key, iHateEveryone);
-	}
-
-	mpfr_clear(u);
+  mpfr_clear(u);
 }
 
-
-
-// TODO possibly optimize it more (maybe in some parts mpz and mpfr aren't required)
 string RSADecryptionUtility(mpz_class M, array<mpz_t, 2> key) {
-	//mpz_t M;
-	//mpz_init_set(M, c);
-	mpz_powm(M.get_mpz_t(), M.get_mpz_t(), key[1], key[0]);
-	string out;
+  mpz_powm(M.get_mpz_t(), M.get_mpz_t(), key[1], key[0]);
+  string out;
 
-	// to get the order of magnitude in base 256
-	mpfr_t u;
-	mpfr_init(u);
-	mpfr_set_z(u, M.get_mpz_t(), MPFR_RNDN);
+  // to get the order of magnitude in base 256
+  mpfr_t u;
+  mpfr_init(u);
+  mpfr_set_z(u, M.get_mpz_t(), MPFR_RNDN);
 
-	// log of u with base 16
-	mpfr_log2(u, u, MPFR_RNDN);
-	double omOld = mpfr_get_d(u, MPFR_RNDN);
-	omOld /= 8;
+  // log of u with base 256
+  mpfr_log2(u, u, MPFR_RNDN);
+  double omOld = mpfr_get_d(u, MPFR_RNDN);
+  omOld /= 8;
 
-	int om = floor(omOld);
+  int om = floor(omOld);
 
-	for (int i = 0; i <= om; i++) {
-		mpz_class t(M); 
-		mpz_class comp(255);
-		comp = comp << (8 * om  - 8 * i);
-		t = t & comp;
-		t = t >> (8 * om  - 8 * i);
-		out.push_back((char)t.get_ui());
-	}
+  for (int i = 0; i <= om; i++) {
+    mpz_class t(M);
+    mpz_class comp(255);
+    comp = comp << (8 * om - 8 * i);
+    t = t & comp;
+    t = t >> (8 * om - 8 * i);
+    out.push_back((char)t.get_ui());
+  }
 
-	mpfr_clear(u);
-	return out;
+  mpfr_clear(u);
+  return out;
 }
 
 string RSADecryption(vector<mpz_class> c, array<mpz_t, 2> key) {
-	string out;
-	for (int i = 0; i < c.size(); i++) {
-		out = out + RSADecryptionUtility(c[i], key);
-	}
-	return out;
+  string out;
+  for (int i = 0; i < c.size(); i++) {
+    out = out + RSADecryptionUtility(c[i], key);
+  }
+  return out;
 }
 
 int main(int argc, char const *argv[]) {
-	Keys key = RSAGeneration();
-	cout << "Input:" << endl;
-	//cout << "Public key: (" << key.publicKey[0] << "," << key.publicKey[1] << ")" << endl;
-	//cout << "Private key: (" << key.privateKey[0] << "," << key.privateKey[1] << ")" << endl;
-	string i;
-	getline(cin, i);
-	vector<mpz_class> cripted;
-	cout << "Crypted message: ";
-	RSAEncryption(i, key.publicKey, cripted);
-	for (int i = 0; i < cripted.size(); i++) {
-		cout << cripted[i].get_str();
-	}
-	cout << endl;
-	string decripted = RSADecryption(cripted, key.privateKey);	
-	cout << "Decrypted message: " << decripted << endl;
-	return 0;
+  Keys key = RSAGeneration();
+  cout << "Input:" << endl;
+  string i;
+  getline(cin, i);
+  vector<mpz_class> cripted;
+  cout << "Crypted message: ";
+  RSAEncryption(i, key.publicKey, cripted);
+  for (int i = 0; i < cripted.size(); i++) {
+    cout << cripted[i].get_str();
+  }
+  cout << endl;
+  string decripted = RSADecryption(cripted, key.privateKey);
+  cout << "Decrypted message: " << decripted << endl;
+  return 0;
 }
