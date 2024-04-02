@@ -82,34 +82,31 @@ Keys RSAGeneration() {
     primesIn.close();
     ofstream primesOut{"list.txt"};
     cout << "Sieving out prime numbers, will take a while, please wait" << endl;
-    vector<unsigned long long> v = sieve(1000000000);
+    vector<mpz_class> v = sieve(1000000000);
     for (unsigned long long i = 0; i < v.size(); i++) {
-      primesOut << v[i] << "\n";
+      primesOut << v[i].get_ui() << "\n";
     }
     primesOut.close();
     primesIn.open("list.txt");
     cout << "Sieving complete" << endl;
   }
-  vector<unsigned long long> v;
+  vector<mpz_class> v;
   string sLine;
   int i = 0;
   while (i != 50847534 && getline(primesIn, sLine)) {
-    v.push_back(stoull(sLine));
+    mpz_class welp(sLine);
+    v.push_back(welp);
     ++i;
   }
-  mpz_t p;
-  mpz_t q;
-  mpz_init_set_ui(p, v[a]);
+  mpz_class p = v[a];
+  mpz_class q = v[b];
   primesIn.close();
-  mpz_init_set_ui(q, v[b]);
-  mpz_class p2(p);
-  mpz_class q2(q);
 
   mpz_class n;
-  n = p2 * q2;
+  n = p * q;
 
-  mpz_class pMinus1 = p2 - 1;
-  mpz_class qMinus1 = q2 - 1;
+  mpz_class pMinus1 = p - 1;
+  mpz_class qMinus1 = q - 1;
 
   mpz_class lambda = lcm(pMinus1, qMinus1);
 
