@@ -12,6 +12,7 @@
                 "${fileDirname}/${fileBasenameNoExtension}",
                 "-I${workspaceFolder}/include/",
                 "-lgmp",
+                "-lgmpxx",
                 "-lmpfr"
             ],
             "options": {

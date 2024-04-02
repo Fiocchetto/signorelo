@@ -86,6 +86,11 @@
 			},
 			{
 				"backtrace" : 2,
+				"fragment" : "-lgmpxx",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
 				"fragment" : "-lmpfr",
 				"role" : "libraries"
 			}

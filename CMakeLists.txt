@@ -11,7 +11,7 @@ include_directories(
 
 add_executable(Main "${Signorello_SOURCE_DIR}/src/main.cpp")
 
-target_link_libraries(Main -lgmp -lmpfr)
+target_link_libraries(Main -lgmp -lgmpxx -lmpfr )
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)

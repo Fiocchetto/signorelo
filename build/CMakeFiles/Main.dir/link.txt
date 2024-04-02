@@ -1,1 +1,1 @@
-/usr/bin/clang++ -g CMakeFiles/Main.dir/src/main.cpp.o -o Main  -lgmp -lmpfr 
+/usr/bin/clang++ -g CMakeFiles/Main.dir/src/main.cpp.o -o Main  -lgmp -lgmpxx -lmpfr 
