@@ -1,8 +1,0 @@
-[
-{
-  "directory": "/home/leo/projects/cpp/signorello/build",
-  "command": "/usr/bin/clang++  -I/home/leo/projects/cpp/signorello/include -g -o CMakeFiles/Main.dir/src/main.cpp.o -c /home/leo/projects/cpp/signorello/src/main.cpp",
-  "file": "/home/leo/projects/cpp/signorello/src/main.cpp",
-  "output": "CMakeFiles/Main.dir/src/main.cpp.o"
-}
-]

@@ -1,3 +1,0 @@
-/home/leo/projects/cpp/signorello/build/CMakeFiles/Main.dir
-/home/leo/projects/cpp/signorello/build/CMakeFiles/edit_cache.dir
-/home/leo/projects/cpp/signorello/build/CMakeFiles/rebuild_cache.dir
